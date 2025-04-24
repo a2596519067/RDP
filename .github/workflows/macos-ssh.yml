@@ -1,0 +1,30 @@
+name: Start SSH Service on macOS Runner
+
+on: [workflow_dispatch]
+
+jobs:
+  setup-ssh:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install OpenSSH and start SSH service
+      run: |
+        # 安装 SSH 服务
+        brew install openssh
+
+        # 创建 SSH 密钥对
+        ssh-keygen -t rsa -b 4096 -C "github-actions@github.com" -f ~/.ssh/id_rsa -N ""
+
+        # 启动 SSH 服务
+        sudo systemsetup -setremotelogin on
+
+        # 添加公钥到 authorized_keys
+        mkdir -p ~/.ssh
+        cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+        chmod 600 ~/.ssh/authorized_keys
+
+        # 输出当前的 SSH 端口
+        echo "SSH server started. Connect using: ssh -p 22 github-actions@$(hostname)"
