@@ -33,5 +33,5 @@ jobs:
       
       - name: start ngrok
         run: brew install ngrok
-      - run: ngrok config add-authtoken $NGROK_AUTH_TOKEN
+      - run: ngrok authtoken $NGROK_AUTH_TOKEN
       - run: ngrok tcp 22
