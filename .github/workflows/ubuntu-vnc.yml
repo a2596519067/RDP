@@ -18,15 +18,13 @@ jobs:
         mkdir -p $HOME/.vnc
         echo "123456" | vncpasswd -f > $HOME/.vnc/passwd
         sudo chmod 600 $HOME/.vnc/passwd
-        echo -e "#!/bin/sh\n \
-        unset SESSION_MANAGER\n \
-        unset DBUS_SESSION_BUS_ADDRESS\n \
-        gnome-session\n" \
-        >> ~/.vnc/xstartup
+        set +H
+        echo -e "#!/bin/sh\nunset SESSION_MANAGER\nunset DBUS_SESSION_BUS_ADDRESS\ngnome-session" >> ~/.vnc/xstartup
+        set -H
         chmod +x ~/.vnc/xstartup
         vncserver -geometry 1920x1080 :1 -localhost no -rfbport 11451
-        - name: start ngrok
-    - run: | 
+    - name: install ngrok
+      run: | 
         curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
         | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
         && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
