@@ -11,8 +11,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - run: echo $NGROK_AUTH_TOKEN
-
       - name: Install OpenSSH and start SSH service
         run: |
           # 安装 SSH 服务
@@ -36,4 +34,6 @@ jobs:
       - name: start ngrok
         run: brew install ngrok
       - run: ngrok authtoken $NGROK_AUTH_TOKEN
+        env:
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
       - run: ngrok tcp 22
