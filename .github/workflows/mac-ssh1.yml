@@ -11,6 +11,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - run: echo $NGROK_AUTH_TOKEN
+
       - name: Install OpenSSH and start SSH service
         run: |
           # 安装 SSH 服务
