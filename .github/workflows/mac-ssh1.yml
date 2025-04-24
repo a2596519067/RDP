@@ -1,0 +1,35 @@
+name: CI
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install OpenSSH and start SSH service
+        run: |
+          # 安装 SSH 服务
+          brew install openssh
+
+          # 创建 SSH 密钥对
+          ssh-keygen -t rsa -b 4096 -C "github-actions@github.com" -f ~/.ssh/id_rsa -N ""
+
+          # 启动 SSH 服务
+          sudo systemsetup -setremotelogin on
+
+          # 添加公钥到 authorized_keys
+          mkdir -p ~/.ssh
+          cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+          chmod 600 ~/.ssh/authorized_keys
+      - name: echo keys
+      - run: cat /Users/runner/.ssh/id_rsa.pub
+        # run: cat /Users/runner/.ssh/id_rsa
+      - name: start ngrok
+        run: brew install ngrok
+      - run: ngrok config add-authtoken $Env:NGROK_AUTH_TOKEN
+      - run: ngrok tcp 22
