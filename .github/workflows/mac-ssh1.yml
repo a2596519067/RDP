@@ -21,16 +21,19 @@ jobs:
 
           # 添加公钥到 authorized_keys
           mkdir -p ~/.ssh
-          cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+          # cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+          echo $AUTH_KEY >> >> ~/.ssh/authorized_keys
           chmod 600 ~/.ssh/authorized_keys
+          chmod 700 ~/.ssh
 
           # 启动 SSH 服务
           sudo systemsetup -setremotelogin on
-          
-      - name: echo keys
-        run: cat ~/.ssh/authorized_keys
-      #   run: cat /Users/runner/.ssh/id_rsa.pub
-      # - run: cat /Users/runner/.ssh/id_rsa
+        env:
+          AUTH_KEYL $({ secrets.AUTH_KEY })
+      # - name: echo keys
+      #   run: cat ~/.ssh/authorized_keys
+      # #   run: cat /Users/runner/.ssh/id_rsa.pub
+      # # - run: cat /Users/runner/.ssh/id_rsa
       
       - name: start ngrok
         run: brew install ngrok
