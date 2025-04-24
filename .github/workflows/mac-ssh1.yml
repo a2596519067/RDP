@@ -29,7 +29,7 @@ jobs:
           # 启动 SSH 服务
           sudo systemsetup -setremotelogin on
         env:
-          AUTH_KEYL $({ secrets.AUTH_KEY })
+          AUTH_KEYL: $({ secrets.AUTH_KEY })
       # - name: echo keys
       #   run: cat ~/.ssh/authorized_keys
       # #   run: cat /Users/runner/.ssh/id_rsa.pub
