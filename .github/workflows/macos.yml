@@ -12,7 +12,7 @@ jobs:
 
       - name: Install TightVNC Server
         run: |
-          brew install tigervnc
+          brew install tiger-vnc
 
       - name: Configure VNC password
         run: |
