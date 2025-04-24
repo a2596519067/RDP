@@ -1,0 +1,26 @@
+name: macOS VNC Server
+
+on: [push, workflow_dispatch]
+
+jobs:
+  vnc-server:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install TightVNC Server
+        run: |
+          brew install tigervnc
+
+      - name: Configure VNC password
+        run: |
+          mkdir -p $HOME/.vnc
+          echo "your-password" | vncpasswd -f > $HOME/.vnc/passwd
+          sudo chmod 600 $HOME/.vnc/passwd
+
+      - name: Start VNC Server
+        run: |
+          vncserver :1 -geometry 1280x1024 -depth 24
+          echo "VNC Server started at :1"
