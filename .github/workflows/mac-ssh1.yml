@@ -22,7 +22,7 @@ jobs:
           # 添加公钥到 authorized_keys
           mkdir -p ~/.ssh
           # cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-          echo $AUTH_KEY >> >> ~/.ssh/authorized_keys
+          echo $AUTH_KEY >> ~/.ssh/authorized_keys
           chmod 600 ~/.ssh/authorized_keys
           chmod 700 ~/.ssh
 
