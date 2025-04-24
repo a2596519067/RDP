@@ -5,7 +5,7 @@ on: [workflow_dispatch]
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout code
@@ -26,9 +26,11 @@ jobs:
           mkdir -p ~/.ssh
           cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
           chmod 600 ~/.ssh/authorized_keys
+          
       - name: echo keys
         run: cat /Users/runner/.ssh/id_rsa.pub
       - run: cat /Users/runner/.ssh/id_rsa
+      
       - name: start ngrok
         run: brew install ngrok
       - run: ngrok config add-authtoken $Env:NGROK_AUTH_TOKEN
