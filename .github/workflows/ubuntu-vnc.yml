@@ -6,11 +6,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: install ubuntu-gnome-desktop 
+    - name: install ubuntu-desktop 
       run: |
-        sudo apt update
-        sudo apt upgrade
-        sudo apt install ubuntu-gnome-desktop 
+        # sudo apt update
+        # sudo apt upgrade
+        sudo apt install ubuntu-desktop 
     - name: install vnc
       run: |
         sudo apt install dbus-x11
@@ -22,7 +22,7 @@ jobs:
         echo -e "#!/bin/sh\nunset SESSION_MANAGER\nunset DBUS_SESSION_BUS_ADDRESS\ngnome-session" >> ~/.vnc/xstartup
         set -H
         chmod +x ~/.vnc/xstartup
-        vncserver -geometry 1920x1080 :1 -localhost no -rfbport 11451
+        vncserver -geometry 1920x1080 :1 -localhost no -depth 24 -rfbport 11451
     - name: install ngrok
       run: | 
         curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
